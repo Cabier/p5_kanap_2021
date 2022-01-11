@@ -8,15 +8,38 @@ http://localhost:3000/api/products/107fb5b75607497b96722bda5b504926
 */
 
 async function main() {
-    
     const articleId =  getArticleId()
     console.log(articleId)
-    const article = await getArticle(articleId)
+    const article = await getArticle(articleId)//await attend resultat d'une promesse
     hydrateArticle(article);
+    const addToCartBtn =document.getElementById("addToCart");
+    addToCartBtn.addEventListener("click", addtocartFnc);
 }
 
 function getArticleId() {
     return new URL(document.location).searchParams.get("id")
+}
+
+function addtocartFnc() {
+
+    console.log("ajouter au panier");
+    alert("quelqu'un a toquer au panier");
+    
+    let addTocart = document.createElement('button');
+    addTocart.addEventListener("click", function(event) {
+        event.preventDefault();
+    })
+    panier.push(article);
+    window.localStorage.setItem('cart',JSON.stringify(article));
+    alert("l'article à bien été ajouté au panier");
+};
+
+    
+ function selectionIdFormulaire  () {
+     
+    const idForm = document.querySelector("#title");
+    console.log(idForm);
+
 }
 
 async function getArticle(articleId) {
@@ -32,10 +55,11 @@ async function getArticle(articleId) {
      }).catch(function(error) {
      alert(error)
      })
+    
 }
 
 function hydrateArticle(article) {
-    const templateElt = document.getElementById("templateArticle2")
+    const templateElt = document.getElementById("templateArticle2")//creation template//
     const cloneElt = document.importNode(templateElt.content,true)
     let optionColor = "";
     article.colors.forEach((el) => { optionColor = optionColor + `<option value="${el}">${el}</option>` });
@@ -47,14 +71,12 @@ function hydrateArticle(article) {
     
     document.getElementById("item").appendChild(cloneElt)
 }
-//-------------------local storage-----------------------//
+// ajouter produit dans le panier cart//
+//récupération des données et envoi au panier
 
 //prix 
 //description couleur nombre //
-main()
-monStockage = localStorage;
-localStorage.setItem('cart_item',cart_item.value);
-var cat = localStorage.getItem('myCat');
+main();
 
 
 // <!> NE PAS ECRIRE SOUS MAIN l'ARTICLE ET LE HTML SONT PAS DISSPONIBLE

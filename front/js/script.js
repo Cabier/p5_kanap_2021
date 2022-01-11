@@ -1,25 +1,5 @@
-/* 
-Exo 1 
-    Faire une fonction add qui ajoute les 2 nombre en entré et retourn le résulta 
-    Proto: function add(nb1, nb2)
-Exo 2 
-    Faire une fonciton even qui indique si le nombre passer en parametre est paire 
-    Elle revoie donc true ou false (un boolean) 
-    Proto: function even(nb1)
-    -function even (a,b) {
-        if (a,b = paire){
-            true
-        }
-        else {
-            false
-        }
-    }
-Exo 3
-    Faire une fonction qui renvoie la valeur de la clé color du 3eme element du tableau 
-    Proto: function get3rdcolor(arr);
-*/
+//fonction qui s'execute dès le chargement de la page qui va contenir le code de base pour pas avoir de variable au niveau du scope global
 
-//fonction qui s'execute dès le chargement de la page
 async function main() {
     const articles = await getArticles()// await ça veut dire que tu attends que la promesse soit résolu
     for (article of articles) {
@@ -29,8 +9,9 @@ async function main() {
 
 function getArticles() {
     return fetch ("http://localhost:3000/api/products")
+    //on attache les fonctions qu'il va exevuter quand il aura récupérer les données
     .then(function(httpBodyResponse){
-        return httpBodyResponse.json()
+        return httpBodyResponse.json()// on transforme
     
     })
     .then(function(articles) {
@@ -46,14 +27,19 @@ function getArticles() {
 
 function displayArticle(article) {
     console.log(article)
+    //on recupere l'élement template en le clonant puis en l'ajoutant
     const templateElt = document.getElementById("templateArticle")
+
     const cloneElt = document.importNode(templateElt.content,true)
+    //const clone Elt permet de faire un clone de template Elt
     cloneElt.getElementById("picture").src = article.imageUrl;
+    //comme si on faisait getelement  sur document sauf qu"on le fait sur clone.elt
     cloneElt.getElementById("picture").alt = article.altTxt
     cloneElt.getElementById("productName").textContent = article.name
     cloneElt.getElementById("productDescription").textContent = article.description
     cloneElt.getElementById("lienlink").href += `?id=${article._id}`
     document.getElementById("items").appendChild(cloneElt)
+    //la dernière ligne permet d'intergrer notre clone dans la page//
 }
 
 main()
